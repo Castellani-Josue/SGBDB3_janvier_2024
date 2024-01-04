@@ -1,13 +1,27 @@
 package com.example.projet_final;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class ProjetFinalApplication {
+import InterfaceGraphique.GUI;
+import Requete.GET;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProjetFinalApplication.class, args);
+public class ProjetFinalApplication extends GUI
+{
+
+
+		/**
+		 * @param args the command line arguments
+		 */
+		public static void main(String[] args) {
+
+			//GET get = new GET(valeurint);
+			//get.GET();
+
+		/* Create and display the form */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new GUI().setVisible(true);
+			}
+		});
 	}
 
 }
