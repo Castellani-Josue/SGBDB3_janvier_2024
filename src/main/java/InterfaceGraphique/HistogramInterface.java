@@ -56,7 +56,8 @@ public class HistogramInterface extends javax.swing.JFrame {
 
 
 
-    private void addGyroButton() {
+    private void addGyroButton()
+    {
         bouttongyro = new JButton("donnée suivante ->");
         bouttongyro.addActionListener(new ActionListener() {
             @Override
@@ -67,13 +68,13 @@ public class HistogramInterface extends javax.swing.JFrame {
         this.add(bouttongyro, BorderLayout.PAGE_END);
     }
 
-    private void updateHistogramsUsingGyroData() {
+    private void updateHistogramsUsingGyroData()
+    {
+
+
         // Fetch gyro data or perform any gyro-related operations here
         // Update hgyrox, hgyroy, hgyroz arrays with gyro data
         // Call the methods to update histograms
-
-
-
 
 
         if(testacc == 0)

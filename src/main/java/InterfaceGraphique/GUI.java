@@ -21,6 +21,9 @@ import org.jfree.chart.axis.DateTickUnitType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,6 +83,7 @@ public class GUI extends JFrame {
     private JPanel panel3;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
+    JPanel mainPanel;
 
 
     public  GUI() {
@@ -88,16 +92,22 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(1000, 800);
+        setSize(1500, 800);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - this.getSize().width) / 2, (screen.height - this.getSize().height) / 2);
         setResizable(true);
 
+        Border border = new LineBorder(Color.white, 1); // Couleur et largeur de la bordure
+
+
+        défilerButton.setBorder(border);
+        timestampButton.setBorder(border);
+
 
 
         grapgh1.setPreferredSize(new Dimension(800, 300));
-        panel3.setPreferredSize(new Dimension(800, 300));
-        panel1.setPreferredSize(new Dimension(900, 500));
+        panel3.setPreferredSize(new Dimension(1300, 300));
+        panel1.setPreferredSize(new Dimension(1200, 500));
 
         // Populate comboBox1 with "gyro" and "acceleration" options
         comboBox1.addItem("gyro");
@@ -113,11 +123,12 @@ public class GUI extends JFrame {
 
                 if (!isAutoScrolling) {
                     // Démarrer le défilement automatique
+                    //mettre à 500 pour l'exam
                     timer = new Timer(1000, new ActionListener() {
+                        //toutes les 1
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            // Mettez ici le code que vous souhaitez exécuter automatiquement toutes les 0.5 secondes
-                            // Par exemple, vous pouvez appeler votre actionListener actuel ici
+
                             actionListener.actionPerformed(e);
                         }
                     });
@@ -207,11 +218,11 @@ public class GUI extends JFrame {
 
 
 
-
+                //converti le jdon de la requete de selction en objt data
                 list = ConvertToString(valeurint);
 
 
-
+                //affiche le type de la class ds le .form , en recup la classe de l'objt data ds la list
 
                 switch (list.get(0).getClasse()) {
                     case "SLOW" -> {
@@ -228,6 +239,7 @@ public class GUI extends JFrame {
                     }
                 }
 
+                //légende , lignes de nos de données
                 seriesgyroX = new TimeSeries("gyrox");
                 seriesgyroY = new TimeSeries("gyroy");
                 seriesgyroZ = new TimeSeries("gyroz");
@@ -239,9 +251,11 @@ public class GUI extends JFrame {
 
                 int i=0;
 
-
+                // 10 valeures à la fois qui vont être affichées , qd on est à la fin  de l'arraylist tu recommences
                 for (i=currentIndex; i<currentIndex+10 && i<list.size();i++)
                 {
+                    //mettre  ds les timesSeries les valeur de la list
+                    //on f ça car addorUpdate soule et donc on est obligé de mettre qqchose ds le premier paramètre
                     int year = 2023;
                     double timeInSeconds = i ;
 
@@ -259,6 +273,7 @@ public class GUI extends JFrame {
                 }
                 dataset.removeAllSeries();
 
+                //dataset c nos données ds le graph qu'on assigne à nos "légendes"
                 dataset.addSeries(seriesgyroX);
                 dataset.addSeries(seriesgyroY);
                 dataset.addSeries(seriesgyroZ);
@@ -344,7 +359,8 @@ public class GUI extends JFrame {
 
 
 
-
+                //incrémenter notre index pour afficher les 10 prochaines valeurs ,
+                // qd on est à la fin de l'arraylist tu recommences , currentIndex à 0
                 currentIndex += 1;
                 if (currentIndex + 9 >= list.size()) {
                     currentIndex = 0; // Revenez au début si vous atteignez la fin des données.
